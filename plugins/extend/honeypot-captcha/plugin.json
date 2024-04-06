@@ -1,0 +1,30 @@
+{
+    "$schema": "../../../system/schema/extend.json",
+    "name": "Honeypot Captcha",
+    "description": "Honeypot CAPTCHA plugin is a tool for protecting web forms from spam and robot attacks. The invisible field attracts bots, which are identified and repelled.",
+    "authors": [
+        {"name": "Friends of Sunlight CMS", "url": "https://github.com/friends-of-sunlight-cms/"}
+    ],
+    "version": "1.0.0",
+    "environment": {
+        "system": "^8.1"
+    },
+    "langs": {
+        "honeypot-captcha": "lang"
+    },
+    "actions": {
+        "config": "ConfigAction"
+    },
+    "config_defaults": {
+        "field_name": "contact_me_by_fax_only",
+        "field_type": "checkbox",
+        "logger_level": 5
+    },
+    "events": [
+        {"event": "captcha.init", "script": "event/captcha_init.php"},
+        {"event": "captcha.check", "script": "event/captcha_check.php"}
+    ],
+    "events.web": [
+        {"event": "tpl.head", "script": "event/head_assets.php"}
+    ]
+}
