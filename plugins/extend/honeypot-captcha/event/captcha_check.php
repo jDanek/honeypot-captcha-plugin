@@ -2,6 +2,7 @@
 
 use Sunlight\Logger;
 use Sunlight\User;
+use Sunlight\Util\Request;
 
 return function (array $args) {
     if (User::isLoggedIn()) {
@@ -11,11 +12,10 @@ return function (array $args) {
     $config = $this->getConfig();
 
     if (
-        !empty($_REQUEST['_' . $config['field_name']])
+        Request::post($config['field1_name']) !== ''
         || (
-            $config['field_type'] === 'checkbox'
-            && !empty($_REQUEST['_' . $config['field_name']])
-            && (bool)$_REQUEST['_' . $config['field_name']] === true
+            Request::post($config['field2_name']) !== ''
+            && (bool)Request::post($config['field2_name']) === true
         )
     ) {
         // remove passwords from log
@@ -25,13 +25,13 @@ return function (array $args) {
             } else {
                 return $v;
             }
-        }, array_keys($_REQUEST), $_REQUEST);
+        }, array_keys($_POST), $_POST);
 
         Logger::log(
             $config['logger_level'],
             'honeypot-captcha',
             'The form was submitted with the "honeypot" field filled in.',
-            ['submitted_data' => array_combine(array_keys($_REQUEST), $submittedData)]
+            ['submitted_data' => array_combine(array_keys($_POST), $submittedData)]
         );
 
         // prevent further processing

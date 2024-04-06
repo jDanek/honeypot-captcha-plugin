@@ -15,15 +15,14 @@ class ConfigAction extends BaseConfigAction
         $config = $this->plugin->getConfig();
 
         return [
-            'field_name' => [
-                'label' => _lang('honeypot-captcha.cfg.field_name'),
-                'input' => Form::input('text', 'config[field_name]', Request::post('config[field_name]', $config['field_name']), ['class' => 'inputmedium', 'required' => true]),
+            'field1_name' => [
+                'label' => _lang('honeypot-captcha.cfg.field1_name'),
+                'input' => Form::input('text', 'config[field1_name]', Request::post('config[field1_name]', $config['field1_name']), ['class' => 'inputmedium', 'required' => true]),
                 'type' => 'text',
             ],
-            'field_type' => [
-                'label' => _lang('honeypot-captcha.cfg.field_type'),
-                'input' => Form::input('text', 'config[field_type]', Request::post('config[field_type]', $config['field_type']), ['class' => 'inputmedium']) . '<br>'
-                    . '<small>(checkbox / hidden / number / password / text)</small>',
+            'field2_name' => [
+                'label' => _lang('honeypot-captcha.cfg.field2_name'),
+                'input' => Form::input('text', 'config[field2_name]', Request::post('config[field2_name]', $config['field2_name']), ['class' => 'inputmedium', 'required' => true]),
                 'type' => 'text',
             ],
             'logger_level' => [

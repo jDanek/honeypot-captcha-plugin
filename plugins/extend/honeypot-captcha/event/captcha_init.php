@@ -8,11 +8,13 @@ return function (array $args): void {
     }
     $config = $this->getConfig();
 
-    $honeypotInput = '<input id="very_important" type="' . _e($config['field_type']) . '" name="_' . _e($config['field_name']) . '" value="' . ($config['field_type'] === 'checkbox' ? '1' : '') . '" tabindex="-1" autocomplete="off">';
+    $honeypotInputs = '<input type="text" name="' . _e($config['field1_name']) . '" value="" tabindex="-1" autocomplete="off">'
+        . '<label><input type="checkbox" name="' . _e($config['field2_name']) . '" value="1" tabindex="-1" autocomplete="off"> Very important</label>';
+
     $args['value'] = [
         'label' => _lang('captcha.input'),
-        'content' => '<div id="very_important" aria-hidden="true"><label>' . $honeypotInput . ' Very important</label></div>',
+        'content' => '<div class="' . $this->getHoneypotCssClass() . '" aria-hidden="true">' . $honeypotInputs . '</div>',
         'top' => true,
-        'class' => 'topyenoh',
+        'class' => $this->getHoneypotCssClass(),
     ];
 };

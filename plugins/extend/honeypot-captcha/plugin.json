@@ -12,12 +12,13 @@
     "langs": {
         "honeypot-captcha": "lang"
     },
+    "class": "HoneypotCaptchaPlugin",
     "actions": {
         "config": "ConfigAction"
     },
     "config_defaults": {
-        "field_name": "contact_me_by_fax_only",
-        "field_type": "checkbox",
+        "field1_name": "contact_me_on_fax",
+        "field2_name": "contact_me_by_fax_only",
         "logger_level": 5
     },
     "events": [
