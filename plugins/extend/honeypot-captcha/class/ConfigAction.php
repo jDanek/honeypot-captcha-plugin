@@ -25,6 +25,11 @@ class ConfigAction extends BaseConfigAction
                 'input' => Form::input('text', 'config[field2_name]', Request::post('config[field2_name]', $config['field2_name']), ['class' => 'inputmedium', 'required' => true]),
                 'type' => 'text',
             ],
+            'css_prefix' => [
+                'label' => _lang('honeypot-captcha.cfg.css_prefix'),
+                'input' => Form::input('text', 'config[css_prefix]', Request::post('config[css_prefix]', $config['css_prefix']), ['class' => 'inputmedium']),
+                'type' => 'text',
+            ],
             'logger_level' => [
                 'label' => _lang('honeypot-captcha.cfg.logger_level'),
                 'input' => Form::select(
@@ -33,29 +38,19 @@ class ConfigAction extends BaseConfigAction
                     $config['logger_level']
                 ),
             ],
-
         ];
     }
 
     protected function mapSubmittedValue(ConfigurationFile $config, string $key, array $field, $value): ?string
     {
-        $allowedInputTypes = [
-            'checkbox',
-            'hidden',
-            'number',
-            'password',
-            'text',
-        ];
-
         switch ($key) {
-            case 'field_type':
-                $config[$key] = !in_array($value, $allowedInputTypes) ? 'text' : $value;
+            case 'css_prefix':
+                $config[$key] = trim($value);
                 return null;
             case 'logger_level':
                 $config[$key] = (int)$value;
                 return null;
         }
-
 
         return parent::mapSubmittedValue($config, $key, $field, $value);
     }

@@ -1,9 +1,7 @@
 <?php
 
-use Sunlight\User;
-
 return function (array $args) {
-    $args['css_after'] .= '<style>.' . $this->randomCssClass . ' {
+    $args['css_after'] .= '<style>.' . $this->getRandomCssClass() . ' {
         clip: rect(0,0,0,0);
         border: 0;
         height: 1px;

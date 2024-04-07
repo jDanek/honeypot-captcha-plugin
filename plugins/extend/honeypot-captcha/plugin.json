@@ -19,6 +19,7 @@
     "config_defaults": {
         "field1_name": "contact_me_on_fax",
         "field2_name": "contact_me_by_fax_only",
+        "css_prefix": "",
         "logger_level": 5
     },
     "events": [
@@ -26,6 +27,6 @@
         {"event": "captcha.check", "script": "event/captcha_check.php"}
     ],
     "events.web": [
-        {"event": "tpl.head", "script": "event/head_assets.php"}
+        {"event": "tpl.head", "script": "event/head_assets.php", "group": "honeypot-captcha"}
     ]
 }

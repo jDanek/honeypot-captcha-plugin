@@ -1,7 +1,6 @@
 <?php
 
 use Sunlight\Logger;
-use Sunlight\User;
 use Sunlight\Util\Request;
 
 return function (array $args) {
@@ -12,19 +11,12 @@ return function (array $args) {
         || Request::post($config['field2_name']) !== null
     ) {
         // remove passwords from log
-        $submittedData = array_map(function ($k, $v) {
-            if ($k === 'password' || $k === 'password2') {
-                return str_repeat('*', strlen($v));
-            } else {
-                return $v;
-            }
-        }, array_keys($_POST), $_POST);
-
+        unset($_POST['password'], $_POST['password2']);
         Logger::log(
             $config['logger_level'],
             'honeypot-captcha',
             'The form was submitted with the "honeypot" field filled in.',
-            ['submitted_data' => array_combine(array_keys($_POST), $submittedData)]
+            ['submitted_data' => $_POST]
         );
 
         // prevent further processing
