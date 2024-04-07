@@ -19,7 +19,7 @@
     "config_defaults": {
         "field1_name": "contact_me_on_fax",
         "field2_name": "contact_me_by_fax_only",
-        "css_prefix": "",
+        "css_prefix": "fax-",
         "logger_level": 5
     },
     "events": [
