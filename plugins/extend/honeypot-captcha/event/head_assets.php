@@ -3,11 +3,7 @@
 use Sunlight\User;
 
 return function (array $args) {
-    if (User::isLoggedIn()) {
-        return;
-    }
-
-    $args['css_after'] .= '<style>.' . $this->getHoneypotCssClass() . ' {
+    $args['css_after'] .= '<style>.' . $this->randomCssClass . ' {
         clip: rect(0,0,0,0);
         border: 0;
         height: 1px;

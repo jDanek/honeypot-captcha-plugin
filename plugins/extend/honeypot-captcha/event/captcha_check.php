@@ -5,18 +5,11 @@ use Sunlight\User;
 use Sunlight\Util\Request;
 
 return function (array $args) {
-    if (User::isLoggedIn()) {
-        return;
-    }
-
     $config = $this->getConfig();
 
     if (
         Request::post($config['field1_name']) !== ''
-        || (
-            Request::post($config['field2_name']) !== ''
-            && (bool)Request::post($config['field2_name']) === true
-        )
+        || Request::post($config['field2_name']) !== null
     ) {
         // remove passwords from log
         $submittedData = array_map(function ($k, $v) {
