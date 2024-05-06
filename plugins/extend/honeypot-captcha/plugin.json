@@ -20,6 +20,8 @@
         "field1_name": "contact_me_on_fax",
         "field2_name": "contact_me_by_fax_only",
         "css_prefix": "fax-",
+        "require_js": true,
+        "js_field_name": "_js_token",
         "logger_level": 5
     },
     "events": [

@@ -6,7 +6,6 @@ use Sunlight\Logger;
 use Sunlight\Plugin\Action\ConfigAction as BaseConfigAction;
 use Sunlight\Util\ConfigurationFile;
 use Sunlight\Util\Form;
-use Sunlight\Util\Request;
 
 class ConfigAction extends BaseConfigAction
 {
@@ -14,31 +13,23 @@ class ConfigAction extends BaseConfigAction
     {
         $config = $this->plugin->getConfig();
 
-        return [
-            'field1_name' => [
-                'label' => _lang('honeypot-captcha.cfg.field1_name'),
-                'input' => Form::input('text', 'config[field1_name]', Request::post('config[field1_name]', $config['field1_name']), ['class' => 'inputmedium', 'required' => true]),
-                'type' => 'text',
-            ],
-            'field2_name' => [
-                'label' => _lang('honeypot-captcha.cfg.field2_name'),
-                'input' => Form::input('text', 'config[field2_name]', Request::post('config[field2_name]', $config['field2_name']), ['class' => 'inputmedium', 'required' => true]),
-                'type' => 'text',
-            ],
-            'css_prefix' => [
-                'label' => _lang('honeypot-captcha.cfg.css_prefix'),
-                'input' => Form::input('text', 'config[css_prefix]', Request::post('config[css_prefix]', $config['css_prefix']), ['class' => 'inputmedium']),
-                'type' => 'text',
-            ],
-            'logger_level' => [
-                'label' => _lang('honeypot-captcha.cfg.logger_level'),
-                'input' => Form::select(
-                    'config[logger_level]',
-                    Logger::LEVEL_NAMES,
-                    $config['logger_level']
-                ),
-            ],
+        $fields = parent::getFields();
+
+        $fields['logger_level'] = [
+            'label' => _lang('honeypot-captcha.cfg.logger_level'),
+            'input' => Form::select(
+                'config[logger_level]',
+                Logger::LEVEL_NAMES,
+                $config['logger_level']
+            ),
         ];
+
+        return $fields;
+    }
+
+    function getConfigLabel(string $key): string
+    {
+        return _lang('honeypot-captcha.cfg.' . $key);
     }
 
     protected function mapSubmittedValue(ConfigurationFile $config, string $key, array $field, $value): ?string
