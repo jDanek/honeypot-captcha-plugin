@@ -3,8 +3,10 @@
 namespace SunlightExtend\HoneypotCaptcha;
 
 use Sunlight\Core;
+use Sunlight\Logger;
 use Sunlight\Plugin\ExtendPlugin;
 use Sunlight\Util\StringGenerator;
+use Sunlight\Xsrf;
 
 class HoneypotCaptchaPlugin extends ExtendPlugin
 {
@@ -21,5 +23,18 @@ class HoneypotCaptchaPlugin extends ExtendPlugin
     function getJsToken(): string
     {
         return $this->jsToken ?? ($this->jsToken = hash_hmac('sha1', $this->getConfig()['js_field_name'], Core::$secret));
+    }
+
+    function logRequest(string $message): void
+    {
+        $submitted_data = $_POST;
+        unset($submitted_data['password'], $submitted_data['password2'], $submitted_data[Xsrf::TOKEN_NAME]); // remove sensitive values from log
+
+        $this->log($message, ['submitted_data' => $submitted_data]);
+    }
+
+    function log(string $message, array $context): void
+    {
+        Logger::log($this->getConfig()['logger_level'], 'honeypot-captcha', $message, $context);
     }
 }
