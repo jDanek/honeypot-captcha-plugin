@@ -1,8 +1,14 @@
 <?php
 
+use Sunlight\User;
 use Sunlight\Util\Form;
 
 return function (array $args): void {
+    if (User::isLoggedIn()) {
+        $args['value'] = [];
+        return;
+    }
+
     $this->enableEventGroup('honeypot-captcha');
 
     $config = $this->getConfig();
