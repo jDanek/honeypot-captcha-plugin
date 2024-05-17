@@ -1,8 +1,14 @@
 <?php
 
+use Sunlight\User;
 use Sunlight\Util\Request;
 
 return function (array $args) {
+    if (User::isLoggedIn()) {
+        $args['value'] = true;
+        return;
+    }
+
     $config = $this->getConfig();
 
     if (
